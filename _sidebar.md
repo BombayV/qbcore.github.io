@@ -1,14 +1,12 @@
 <!-- docs/_sidebar.md -->
 
 
-* [HOME](./)
+* [INDEX](./)
 
-* [Tutorials](./tutorials/index)
-  * [Tomcat](./tutorials/tomcat/index)
-  * [Cloud](./tutorials/cloud/index)
-  * [Java](./tutorials/java/index)
+* [Functions](./tutorials/index)
+  * [Server](./tutorials/tomcat/index)
+  * [Client](./tutorials/cloud/index)
 
 * [About](./about/index)
 
-* [Contact](./contact/index)
 
