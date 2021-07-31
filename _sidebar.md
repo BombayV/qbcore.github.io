@@ -1,7 +1,7 @@
 <!-- docs/_sidebar.md -->
 
 
-* [INDEX](./)
+* [Maybe a side bar?](./)
 
 * [Functions](./tutorials/index)
   * [Server](./tutorials/tomcat/index)
