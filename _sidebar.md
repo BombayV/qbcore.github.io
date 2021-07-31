@@ -1,7 +1,6 @@
 <!-- docs/_sidebar.md -->
 
-
-* [Maybe a side bar?](./)
+- **QBCore Documentation**
 
 * [Functions](./tutorials/index)
   * [Server](./tutorials/tomcat/index)
