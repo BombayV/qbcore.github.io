@@ -1,11 +1,10 @@
 <!-- docs/_sidebar.md -->
 
-- **QBCore Documentation**
+- [Commands]()
+- [Server](./server/index)
+  - [Functions]()
+  - [Events]()
 
-* [Functions](./tutorials/index)
-  * [Server](./tutorials/tomcat/index)
-  * [Client](./tutorials/cloud/index)
-
-* [About](./about/index)
-
-
+- [Client](./server/index)
+  - [Functions]()
+  - [Events]()
