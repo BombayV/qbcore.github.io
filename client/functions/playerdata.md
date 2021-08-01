@@ -1,4 +1,4 @@
-# PlayerData
+# PlayerData Client
 
 In order to retrieve player data client sided. You will need the following to call the values you desire.
 ```lua

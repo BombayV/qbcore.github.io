@@ -1,6 +1,6 @@
 <!-- docs/_sidebar.md -->
 [**Go Back**](./about.md)
-- [Player Data](/./client/functions/playerdata?id=playerdata)
+- [Player Data](/./client/functions/playerdata?id=playerdata-client)
     - [Basic Info](/./client/functions/playerdata?id=basic-info)
         - [Citizen Id](/./client/functions/playerdata?id=citizen-id)
         - [Steam](/./client/functions/playerdata?id=steam)
