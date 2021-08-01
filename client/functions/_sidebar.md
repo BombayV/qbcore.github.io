@@ -1,5 +1,5 @@
 <!-- docs/_sidebar.md -->
-[**Go Back**](../about.md)
+[**Go Back**](./about.md)
 - [Player Data](/./client/functions/playerdata?id=playerdata)
     - [Basic Info](/./client/functions/playerdata?id=basic-info)
         - [Citizen Id](/./client/functions/playerdata?id=citizen-id)
