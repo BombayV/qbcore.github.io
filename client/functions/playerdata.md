@@ -8,7 +8,7 @@ local citizenid = Player.citizenid
 !> **Important** - Since the client is already the source, we don't need to specify for the variable `Player`. We also won't need to add `PlayerData` after `Player` unlike obtaining PlayerData server sided.
 
 ## Basic Info
-All the following is for obtaining a players basic data.
+All the following is for obtaining a player's basic data.
 
 ### Citizen Id
 *Returns player's citizen id*
