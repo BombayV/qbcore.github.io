@@ -1,6 +1,7 @@
 <!-- _coverpage.md -->
 
-# **QBCORE** <small>3.5</small>
+# **QBCORE**
 
-[GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](#quick-start)
+[Get Started](about.md)
+[Organization](https://github.com/qbcore-framework)
+[Website](https://github.com/BombayV/qbcore.github.io)

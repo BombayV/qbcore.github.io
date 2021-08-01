@@ -1,10 +1,8 @@
 <!-- docs/_sidebar.md -->
+**Client**
 
-- [Commands]()
-- [Server](./server/index)
-  - [Functions]()
-  - [Events]()
+- [Functions](./client/functions/playerdata?id=player-data)
 
-- [Client](./server/index)
-  - [Functions]()
-  - [Events]()
+**Server**
+
+- [Functions](./client/player.md)
