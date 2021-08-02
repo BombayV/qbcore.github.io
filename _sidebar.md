@@ -20,3 +20,7 @@
 
 - [Player Data](./server/playerdata/playerdata?id=playerdata-server)
 - [Functions](./server/functions/functions?id=server-sided-functions-and-usage)
+
+**Other**
+
+- [**LICENSE**](./license?id=license)
