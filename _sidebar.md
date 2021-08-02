@@ -4,6 +4,8 @@
 - [FAQ](./faq.md)
 
 **Basic**
+- [Database](./other/database?id=qbcore-database)
+- [Installation](./other/installation?id=qbcore-installation)
 - [Fxmanifest](./other/fxmanifest/fxmanifest?id=qbcore-fxmanifest-introduction)
 - [Server.cfg](./other/servercfg?id=qbcore-server-cfg)
 - [Core Config](./other/config?id=qbcore-config-file)
