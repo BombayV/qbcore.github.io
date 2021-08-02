@@ -23,4 +23,5 @@
 
 **Other**
 
+- [Contributors](./contributors?id=qbcore-contributors)
 - [**LICENSE**](./license?id=license)
