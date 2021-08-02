@@ -1,7 +1,7 @@
 <!-- docs/_sidebar.md -->
 **Info**
 - [About](./about.md)
-- [FAQ](./faq.md)
+- [FAQ](./faq?id=qbcore-faq)
 - [Tutorials](./tutorials?id=qbcore-tutorials)
 
 **Basic**
