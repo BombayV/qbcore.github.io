@@ -38,4 +38,4 @@ Now go to your `server.cfg` file and delete the following if it exists.
 # Database Connection String
 set mysql_connection_string "mysql://user:password@host/database?debug=true&charset=utf8mb4"
 ```
-If you would **RATHER** use the method you just deleted, then just delete the `config.json` from ghmattimysql. :blush:
+If you would **RATHER** use the method you just deleted, then just delete the `config.json` from ghmattimysql. 😊

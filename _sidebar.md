@@ -1,6 +1,6 @@
 <!-- docs/_sidebar.md -->
 **Info**
-- [About](./about.md)
+- [About](./about?id=official-qbcore-framework-documentation)
 - [FAQ](./faq?id=qbcore-faq)
 - [Tutorials](./tutorials?id=qbcore-tutorials)
 

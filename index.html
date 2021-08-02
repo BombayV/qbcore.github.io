@@ -43,6 +43,13 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #dc143c;
     }
+    
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
@@ -69,7 +76,22 @@
           buttonText : 'Copy to clipboard',
           errorText  : 'Error',
           successText: 'Copied code'
-        }
+        },
+        plugins: [
+          function(hook) {
+            var footer = [
+              '<hr/>',
+              '<footer class="container">',
+              '<span>Made with ❤️ by <a href="https://github.com/BombayV">Bombay#9032</a></span>',
+              '<span> Copyright &copy; 2021</span>',
+              '</footer>'
+            ].join('');
+
+            hook.afterEach(function(html) {
+              return html + footer;
+            });
+          }
+        ]
       }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js" data-ga="UA-178023647-2"></script>
