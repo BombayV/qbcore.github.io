@@ -2,10 +2,11 @@
 **Info**
 - [About](./about.md)
 - [FAQ](./faq.md)
+- [Tutorials](./tutorials?id=qbcore-tutorials)
 
 **Basic**
-- [Database](./other/database?id=qbcore-database)
 - [Installation](./other/installation?id=qbcore-installation)
+- [Database](./other/database?id=qbcore-database)
 - [Fxmanifest](./other/fxmanifest/fxmanifest?id=qbcore-fxmanifest-introduction)
 - [Server.cfg](./other/servercfg?id=qbcore-server-cfg)
 - [Core Config](./other/config?id=qbcore-config-file)
