@@ -7,4 +7,4 @@
 **Server**
 
 - [Player Data](./server/playerdata/playerdata?id=playerdata-server)
-- [Functions](./server/functions/functions.md)
+- [Functions](./server/functions/functions?id=server-sided-functions-and-usage)
