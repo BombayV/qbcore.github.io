@@ -17,7 +17,7 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 
 ## Manual Installation
 1) Go into your resources folder for your server.
-2) Download [qb-core](https://github.com/qbcore-framework/qb-core), [qb-inventory](https://github.com/qbcore-framework/qb-inventory), [progressbar](https://github.com/qbcore-framework/progressbar), [qb-multichar](https://github.com/qbcore-framework/qb-multicharacter), [qb-spawn](https://github.com/qbcore-framework/qb-spawn), [qb-ambulancejob](https://github.com/qbcore-framework/qb-ambulancejob), [ghmattimysql](https://github.com/GHMatti/ghmattimysql/releases/tag/1.3.2), and other resources you plan to use.
+2) Download the dependecies, core resources which you can find in [here](./other/servercfg?id=qbcore-server-cfg), and other resources you plan to use.
 3) Add them in your resources folder.
 4) Ensure them in your server cfg by adding the following for every resource.
 ```cfg
