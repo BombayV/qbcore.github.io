@@ -1,1 +1,3 @@
-QBCore Documentation
+# QBCore Documentation
+
+## Old documentation design.
