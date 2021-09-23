@@ -54,3 +54,6 @@
     - [Gangs Info](/./client/playerdata/playerdata?id=gangs-info)
         - [Gang Name](/./client/playerdata/playerdata?id=gang-name)
         - [Gang Label](/./client/playerdata/playerdata?id=gang-label)
+        - [Gang Grade](/./client/playerdata/playerdata?id=gang-grade)
+        - [Gang Grade Level](/./client/playerdata/playerdata?id=gang-grade-level)
+        - [Gang IsBoss](/./client/playerdata/playerdata?id=gang-gradeisboss)

@@ -18,7 +18,7 @@ local citizenid = Player.citizenid
 print(citizenid)
 ```
 ### Steam
-*Returns player's citizen id*
+*Returns player's steam id*
 ```lua
 local Player = QBCore.Functions.GetPlayerData()
 local steam = Player.steam
@@ -151,7 +151,7 @@ local stress = Player.metadata['stress']
 print(stress)
 ```
 ### Armor
-*Returns player's death status*
+*Returns player's armor status*
 ```lua
 local Player = QBCore.Functions.GetPlayerData()
 local armor = Player.metadata['armor']
@@ -235,7 +235,7 @@ local bloodType = Player.metadata['bloodtype']
 print(bloodType)
 ```
 ### Dealer Rep
-*Returns the player's attachment crafting rep amount*
+*Returns the player's dealer rep amount*
 ```lua
 local Player = QBCore.Functions.GetPlayerData()
 local dealerRep = Player.metadata['dealerrep']
@@ -373,4 +373,28 @@ print(gangName)
 local Player = QBCore.Functions.GetPlayerData()
 local gangLabel = Player.gang.label
 print(gangLabel)
+```
+
+### Gang Grade
+*Returns the player's gang grade*
+```lua
+local Player = QBCore.Functions.GetPlayerData()
+local gangGrade = Player.PlayerData.gang.grade.name
+print(gangGrade)
+```
+
+### Gang Grade Level
+*Returns the player's gang grade level*
+```lua
+local Player = QBCore.Functions.GetPlayerData()
+local gangLevel = Player.PlayerData.gang.grade.level
+print(gangLevel)
+```
+
+### Gang isBoss
+*Returns true if the player is the boss*
+```lua
+local Player = QBCore.Functions.GetPlayerData()
+local isBoss = Player.PlayerData.gang.isBoss
+print(isBoss)
 ```
