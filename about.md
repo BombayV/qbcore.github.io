@@ -1,3 +1,5 @@
+# **FUNCTIONS AND QBCORE DATA MAY BE OUTDATED**
+
 # **Official QBCore Framework Documentation**
 *This is the official QBCore Framework Documentation page where you'll be able to find from tutorials, to framework related stuff which will hopefully guide you into developing QBCore resources.*
 
