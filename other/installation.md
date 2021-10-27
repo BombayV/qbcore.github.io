@@ -4,6 +4,12 @@ Here you'll find all the ways to install QBCore into your server.
 ?> **Before continuing** - If your doing this without [txAdmin](https://txadm.in/), make sure you already have a basic server installed. This includes [artifacts](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/) and the default [cfx-server-data](https://github.com/citizenfx/cfx-server-data). You will also need a database like MySQl, HeidiSQL, or XAMPP. Check out [database info]() for more information about this.
 
 ## Using txAdmin
+**NEW METHOD**
+1) We are now in popular templates. Click on Popular Templates and select the QBCore one.
+2) Follow the steps given by txAdmin. You will need a key from keymaster and XAMPP or MySql. We recommend adding your Steam API Key too.
+3) Wait for everything to download and you'll have your new QBCore server ready to go!
+
+**OLD METHOD**
 1) Open the txAdmin interface. It will prompt you with a login and then it will proceed to make you pick to create a server. You will choose **Remote URL Template**.
 ![](https://c.file.glass/cecj6.png)
 2) It will prompt you with select template input. You will add the following 

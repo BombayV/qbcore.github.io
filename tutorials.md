@@ -50,27 +50,12 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 ```
 
 - `server.cfg` file: 
+
 ```cfg
 set onesync on
 ```
 
 - txAdmin: Go to settings, then onesync, and choose infinity.
-
-### Deleting Client Cache
-
-1) Navigate to your FiveM Application Data folder, you can find this by searching in the windows search bar %localappdata% and then going into the FiveM folder
-
-2) Open the data folder
-
-3) Delete all folders besides game-storage and nui-storage according to CFX.re, this prevents longer downloading times when starting up FiveM after clearing you cache, of course you can delete all folders, no harm in that, but as I said it will take longer to startup but that's a one time thing
-
-4) Delete the files from your trash bin and start FiveM
-
-### Enabling Casino
-
-- Enable build 2189 and use [**this**](https://forum.cfx.re/t/cayo-perico-casino-dlc-ipl-loader/2099391)
-
-- If you want the wheel too, you can use [**this**](https://github.com/GhzGarage/esx_tpnrp_luckywheel)
 
 ### Voice System
 1) Set onesync infinity on

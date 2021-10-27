@@ -25,6 +25,12 @@ Allow for the use of [Lua 5.4](https://www.lua.org/manual/5.4/manual.html)
 lua54 'yes'
 ```
 
+You can also add the new fxv2_oal system which has a smaller overhead.
+```lua
+use_fxv2_oal 'yes'
+```
+
+
 ## server_only
 This can only be used when you only have a server sided file. Meaning that everything in your resource is on the server.
 
@@ -97,6 +103,7 @@ description 'QBCore Example Manifest'
 version '1.0.0'
 
 lua54 'yes' -- Add in case you want to use lua 5.4 (https://www.lua.org/manual/5.4/manual.html)
+use_fxv2_oal 'yes' -- Requires lua 5.4
 
 shared_script { 
     '@qb-core/import.lua'
