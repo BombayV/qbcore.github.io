@@ -25,7 +25,7 @@ Allow for the use of [Lua 5.4](https://www.lua.org/manual/5.4/manual.html)
 lua54 'yes'
 ```
 
-You can also add the new fxv2_oal system which has a smaller overhead.
+You can also add the new fxv2_oal system which has a smaller overhead. However, this will remove functions such as the automatic unpacking of vectors.
 ```lua
 use_fxv2_oal 'yes'
 ```
@@ -105,7 +105,7 @@ version '1.0.0'
 lua54 'yes' -- Add in case you want to use lua 5.4 (https://www.lua.org/manual/5.4/manual.html)
 use_fxv2_oal 'yes' -- Requires lua 5.4
 
-shared_script { 
+shared_script {
     '@qb-core/import.lua'
 }
 

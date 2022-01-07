@@ -1,102 +1,50 @@
 # QBCore Server Cfg
+- It is highly recommended to use the [txAdmin recipe](https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yaml). It already runs inside txAdmin so it's not needed to do it manually.
 
 ```cfg
-# FiveM Core Resources
+## You CAN edit the following:
+endpoint_add_tcp "0.0.0.0:30120"
+endpoint_add_udp "0.0.0.0:30120"
+sv_maxclients 10
+set steam_webApiKey "none"
+sets tags "default, deployer, qbcore, qb-core"
+
+## You MAY edit the following:
+sv_licenseKey "LICENSE_KEY_HERE"
+sv_hostname "QBCore Server!"
+sets sv_projectName "[QBCore] Server Name"
+sets sv_projectDesc "Very cool QBCore testing server!"
+sets locale "en-US"
+load_server_icon myLogo.png
+set mysql_connection_string "mysql://user:password@host/database?charset=utf8mb4&dateStrings=true"
+
+# Voice config
+setr voice_useNativeAudio true
+setr voice_useSendingRangeOnly true
+setr voice_defaultCycle "GRAVE"
+setr voice_defaultVolume 0.3
+setr voice_enableRadioAnim 1
+setr voice_syncData 1
+
+# These resources will start by default.
 ensure mapmanager
+ensure chat
 ensure spawnmanager
 ensure sessionmanager
-ensure debug
+ensure basic-gamemode
+ensure hardcap
 ensure baseevents
-ensure chat
 
-# Dependencies
-ensure ghmattimysql
-ensure bob74_ipl
-ensure connectqueue
-ensure LegacyFuel
-ensure warmenu
-
-# QBCore Core Resources
+# QBCore & Extra stuff
+# As mentioned before, it is easier to download and install QBCore from txAdmin. If you decide to go this route, you might experience problems with the loading order
 ensure qb-core
-ensure qb-logs
-ensure qb-multicharacter
-ensure qb-spawn
-ensure qb-inventory
-ensure qb-hud
-ensure qb-weapons
-ensure qb-garages
-ensure qb-smallresources
+ensure [qb]
+ensure [standalone]
+ensure [voice]
+ensure hospital_map
 
-# # QBCore resources
-ensure qb-admin
-ensure qb-afk
-ensure qb-ambulancejob
-ensure qb-anticheat
-ensure qb-apartments
-ensure qb-banking
-ensure qb-bankrobbery
-ensure qb-blackjack
-ensure qb-bossmenu
-ensure qb-builderjob
-#ensure qb-busjob -- Currently Broken
-ensure qb-carwash
-ensure qb-casino
-ensure qb-cityhall
-ensure qb-clothing
-ensure qb-coke
-ensure qb-commandbinding
-ensure qb-companies
-ensure qb-crafting
-ensure qb-crypto
-ensure qb-customs
-ensure qb-diving
-ensure qb-doorlock
-ensure qb-drugs
-ensure qb-fitbit
-ensure qb-gangs
-ensure qb-garages
-ensure qb-garbagejob
-ensure qb-hotdogjob
-ensure qb-houserobbery
-ensure qb-houses
-ensure qb-hud
-ensure qb-ifruitstore
-ensure qb-interior
-ensure qb-jewelery
-ensure qb-keyminigame
-ensure qb-lapraces
-ensure qb-lawyerjob
-ensure qb-lockpick
-ensure qb-mechanicjob
-ensure qb-methlab
-ensure qb-moneysafe
-ensure qb-newsjob
-ensure qb-oxyrun
-ensure qb-pawnshop
-ensure qb-phone
-ensure qb-ping
-ensure qb-policejob
-#ensure qb-printer -- Currently Broken
-ensure qb-radialmenu
-ensure qb-recyclejob
-ensure qb-scoreboard
-ensure qb-scrapyard
-ensure qb-shops
-ensure qb-skillbar
-ensure qb-storerobbery
-ensure qb-streetraces
-ensure qb-taxijob
-ensure qb-towjob
-ensure qb-traphouse
-ensure qb-truckerjob
-ensure qb-truckrobbery
-ensure qb-tunerchip
-ensure qb-vehiclefailure
-ensure qb-vehiclekeys
-ensure qb-vehiclepush
-ensure qb-vehiclesales
-ensure qb-vehicleshop
-ensure qb-vineyard
-ensure qb-weathersync
-ensure qb-weed
+# Add system admins
+add_ace group.admin command allow # allow all commands
+add_ace group.admin command.quit deny # but don't allow quit
+add_principal identifier.fivem:XXXXXXX group.admin # Your identifier
 ```

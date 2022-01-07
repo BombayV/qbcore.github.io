@@ -10,6 +10,7 @@
 - [Fxmanifest](./other/fxmanifest/fxmanifest?id=qbcore-fxmanifest-introduction)
 - [Server.cfg](./other/servercfg?id=qbcore-server-cfg)
 - [Core Config](./other/config?id=qbcore-config-file)
+- [NPWD](./other/npwd?id=npwd)
 
 **Client**
 

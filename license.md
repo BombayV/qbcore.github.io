@@ -1,5 +1,6 @@
 # **LICENSE**
 
+```md
 QBCore Framework
 Copyright (C) 2021 Joshua Eger
 
@@ -15,6 +16,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>
+```
 
 ### ESX Licensing
 Some of the code has been used from the well known ESX framework and has been licensed accordingly. Also huge thank you to the ESX team for the constant open line of communication and understanding during this whole process! I hope to work with you all again in the very near future.

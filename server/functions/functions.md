@@ -2,67 +2,40 @@
 
 The following info contains every server sided function in QBCore framework and how to use it. It also contains some basic info on what it does.
 
-?> **Important information** - All the following functions required QBCore object which is called through the import in the fxmanifest. If you don't know yet about importing the QBCore object, we recommend reading the [fxmanifest documentation](./other/fxmanifest?id=qbcore-fxmanifest-introduction)
+?> **Important information** - All the following functions required QBCore object which is called through the import in the fxmanifest or the export. If you don't know yet about importing the QBCore object, we recommend reading the [fxmanifest documentation](./other/fxmanifest?id=qbcore-fxmanifest-introduction)
 
-## QBCore.Functions.ExecuteSql
+## QBCore.Functions.GetCoords
 
-**Usage -** This is an alternative to using the ghmattimysql export.
+**Usage -** Returns a player's coords in a vector4 format.
 
 **Parameters -**
 
-|  wait  || query  ||   cb   |
-| :----: || :----: || :----: |
-| bool   || ghmatt ||  bool  |
-| wait   || name   ||   cb   |
+|  source  |
+| :----: |
+| number   |
 
-**Returns -**  *Executes data into the db*
+**Returns -**  *Vector*
 
 ```lua
-QBCore.Functions.ExecuteSql = function(wait, query, cb)
-	local rtndata = {}
-	local waiting = true
-	exports['ghmattimysql']:execute(query, {}, function(data)
-		if cb ~= nil and wait == false then
-			cb(data)
-		end
-		rtndata = data
-		waiting = false
-	end)
-	if wait then
-		while waiting do
-			Citizen.Wait(5)
-		end
-		if cb ~= nil and wait == true then
-			cb(rtndata)
-		end
-	end
-	return rtndata
-end
+local coords = QBCore.Functions.GetCoords(coords)
+print(coords.x, coords.y, coords.z, coords.w) -- x, y, z, w
 ```
 
 ## QBCore.Functions.GetIdentifier
 
-**Usage -** Returns the players identifier (depends on config whether steam or license)
+**Usage -** Returns the player's identifier based on type or config.
 
 **Parameters -**
 
 |  source  || idtype  |
 | :----: || :----: |
 | number   || string |
-| source   || type of identifier  |
 
-**Returns -**  *Returns specific identifier for the specified source*
+**Returns -**  *String*
 
 ```lua
-QBCore.Functions.GetIdentifier = function(source, idtype)
-	local idtype = idtype ~=nil and idtype or QBConfig.IdentifierType
-	for _, identifier in pairs(GetPlayerIdentifiers(source)) do
-		if string.find(identifier, idtype) then
-			return identifier
-		end
-	end
-	return nil
-end
+local identifier = QBCore.Functions.GetIdentifier(source, 'license')
+print(identifier) -- 'license:1234567890123'
 ```
 
 ## QBCore.Functions.GetSource
@@ -74,22 +47,12 @@ end
 |  identifier  |
 | :----: |
 | string   |
-| identifier   |
 
-**Returns -**  *Player's source number*
+**Returns -**  *Number*
 
 ```lua
-QBCore.Functions.GetSource = function(identifier)
-	for src, player in pairs(QBCore.Players) do
-		local idens = GetPlayerIdentifiers(src)
-		for _, id in pairs(idens) do
-			if identifier == id then
-				return src
-			end
-		end
-	end
-	return 0
-end
+local targetId = QBCore.Functions.GetSource('license:1234567890123')
+print(targetId) -- 1
 ```
 
 ## QBCore.Functions.GetPlayer
@@ -101,18 +64,12 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Specified source's player data*
+**Returns -**  *Table*
 
 ```lua
-QBCore.Functions.GetPlayer = function(source)
-	if type(source) == "number" then
-		return QBCore.Players[source]
-	else
-		return QBCore.Players[QBCore.Functions.GetSource(source)]
-	end
-end
+local Player = QBCore.Functions.GetPlayer(source)
+print(json.encode(Player)) -- Table with all possible data
 ```
 
 ## QBCore.Functions.GetPlayerByCitizenId
@@ -124,20 +81,12 @@ end
 |  citizenid  |
 | :----: |
 | number   |
-| citizen id   |
 
-**Returns -**  *A specified player's source*
+**Returns -**  *Table*
 
 ```lua
-QBCore.Functions.GetPlayerByCitizenId = function(citizenid)
-	for src, player in pairs(QBCore.Players) do
-		local cid = citizenid
-		if QBCore.Players[src].PlayerData.citizenid == cid then
-			return QBCore.Players[src]
-		end
-	end
-	return nil
-end
+local Player = QBCore.Functions.GetPlayerByCitizenId(citizenid)
+print(json.encode(Player)) -- Table with all possible data
 ```
 
 ## QBCore.Functions.GetPlayerByPhone
@@ -146,23 +95,15 @@ end
 
 **Parameters -**
 
-|  number  |
+|  phoneNumber  |
 | :----: |
 | number   |
-| phone number   |
 
-**Returns -**  *A specified player's source*
+**Returns -**  *Table*
 
 ```lua
-QBCore.Functions.GetPlayerByPhone = function(number)
-	for src, player in pairs(QBCore.Players) do
-		local cid = citizenid
-		if QBCore.Players[src].PlayerData.charinfo.phone == number then
-			return QBCore.Players[src]
-		end
-	end
-	return nil
-end
+local Player = QBCore.Functions.GetPlayerByPhone(phoneNumber)
+print(json.encode(Player)) -- Table with all possible data
 ```
 
 ## QBCore.Functions.GetPlayers
@@ -171,15 +112,145 @@ end
 
 **Parameters -** None
 
-**Returns -**  *A table of all players source*
+**Returns -**  *Table*
 
 ```lua
-QBCore.Functions.GetPlayers = function()
-	local sources = {}
-	for k, v in pairs(QBCore.Players) do
-		table.insert(sources, k)
-	end
-	return sources
+local players = QBCore.Functions.GetPlayers()
+for _, v in pairs(players) do
+    print(json.encode(v))
+end
+```
+
+## QBCore.Functions.GetQBPlayers
+
+**Usage -** Returns an array of QB Player class instances currently in the server.
+
+**Parameters -** None
+
+**Returns -**  *Array*
+
+```lua
+local players = QBCore.Functions.GetQBPlayers()
+for _, v in pairs(players) do
+    -- Do something
+end
+```
+
+## QBCore.Functions.GetPlayersOnDuty
+
+**Usage -** Returns a table of players with a job currently in the server (use for onesync).
+
+**Parameters -** None
+
+**Returns -**  *Table & Number*
+
+```lua
+local players, count = QBCore.Functions.GetPlayersOnDuty('police')
+print(count) -- 3
+for _, v in pairs(players) do
+    print(json.encode(v))
+end
+```
+
+## QBCore.Functions.GetDutyCount
+
+**Usage -** Returns the number of players on duty with a job.
+
+**Parameters -** None
+
+**Returns -**  *Number*
+
+```lua
+local count = QBCore.Functions.GetDutyCount('police')
+print(count) -- 3
+```
+
+## QBCore.Functions.GetBucketObjects
+
+**Usage -** Returns the objects related to buckets, first returned value is the player buckets , second one is entity buckets.
+
+**Parameters -** None
+
+**Returns -**  *Table & Table*
+
+```lua
+local playersBucket, entitiesBuckets = QBCore.Functions.GetBucketObjects()
+-- Loop through them
+```
+
+## QBCore.Functions.SetPlayerBucket
+
+**Usage -** Will set the provided player id / source into the provided bucket id. Returns a boolean if it was successful or not.
+
+**Parameters -**
+
+|  source  ||  bucket  |
+| :----:   || :----:   |
+| number   || number   |
+
+**Returns -**  *Boolean*
+
+```lua
+local newBucket = QBCore.Functions.SetPlayerBucket(source, 5)
+if newBucket then
+    -- Do something
+end
+```
+
+## QBCore.Functions.GetPlayersInBucket
+
+**Usage -** Returns array with all the players in the passed bucket.
+
+**Parameters -**
+
+|  bucket  |
+| :----:   |
+| number   |
+
+**Returns -**  *Table/Boolean*
+
+```lua
+local players = QBCore.Functions.GetPlayersInBucket(5)
+for k, v in pairs(players) do
+    -- Do something
+end
+```
+
+## QBCore.Functions.GetEntitiesInBucket
+
+**Usage -** Returns array with all the entities (not players) in the passed bucket.
+
+**Parameters -**
+
+|  bucket  |
+| :----:   |
+| number   |
+
+**Returns -**  *Table/Boolean*
+
+```lua
+local players = QBCore.Functions.GetEntitiesInBucket(5)
+for k, v in pairs(players) do
+    -- Do something
+end
+```
+
+## QBCore.Functions.IsPlayerInBucket
+
+**Usage -** Returns if passed player is in the passed bucket.
+
+**Parameters -**
+
+|  source  ||  bucket  |
+| :----:   || :----:   |
+| number   || number   |
+
+**Returns -**  *Boolean*
+
+```lua
+local inBucket = QBCore.Functions.IsPlayerInBucket(source, 5)
+if inBucket then
+    -- Do something
 end
 ```
 
@@ -289,43 +360,11 @@ end
 |  source  || reason  ||   setKickReason   ||   deferrals   |
 | :----: || :----: || :----: || :----: |
 | number   || string ||  bool  ||  bool  |
-| source   || reason   ||   use reason   ||   deferrals   |
 
-**Returns -**  *Kicks an specified source from the server with a reason*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.Kick = function(source, reason, setKickReason, deferrals)
-	local src = source
-	reason = "\n"..reason.."\n🔸 Check our Discord for further information: "..QBCore.Config.Server.discord
-	if(setKickReason ~=nil) then
-		setKickReason(reason)
-	end
-	Citizen.CreateThread(function()
-		if(deferrals ~= nil)then
-			deferrals.update(reason)
-			Citizen.Wait(2500)
-		end
-		if src ~= nil then
-			DropPlayer(src, reason)
-		end
-		local i = 0
-		while (i <= 4) do
-			i = i + 1
-			while true do
-				if src ~= nil then
-					if(GetPlayerPing(src) >= 0) then
-						break
-					end
-					Citizen.Wait(100)
-					Citizen.CreateThread(function() 
-						DropPlayer(src, reason)
-					end)
-				end
-			end
-			Citizen.Wait(5000)
-		end
-	end)
-end
+QBCore.Functions.Kick(source, 'Testing kick function', false, deferrals)
 ```
 ## QBCore.Functions.IsWhitelisted
 
@@ -336,29 +375,13 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Is specified source whitelisted*
+**Returns -**  *Boolean*
 
 ```lua
-QBCore.Functions.IsWhitelisted = function(source)
-	local identifiers = GetPlayerIdentifiers(source)
-	local rtn = false
-	if (QBCore.Config.Server.whitelist) then
-		QBCore.Functions.ExecuteSql(true, "SELECT * FROM `whitelist` WHERE `"..QBCore.Config.IdentifierType.."` = '".. QBCore.Functions.GetIdentifier(source).."'", function(result)
-			local data = result[1]
-			if data ~= nil then
-				for _, id in pairs(identifiers) do
-					if data.steam == id or data.license == id then
-						rtn = true
-					end
-				end
-			end
-		end)
-	else
-		rtn = true
-	end
-	return rtn
+local isWhitelisted = QBCore.Functions.IsWhitelisted(source)
+if isWhitelisted then
+    -- Do something
 end
 ```
 
@@ -371,25 +394,11 @@ end
 |  source  || permission  |
 | :----: || :----: |
 | number   || string |
-| source   || permission name   |
 
-**Returns -** *Specified permission name to source*
+**Returns -** *Nothing*
 
 ```lua
-QBCore.Functions.AddPermission = function(source, permission)
-	local Player = QBCore.Functions.GetPlayer(source)
-	if Player ~= nil then 
-		QBCore.Config.Server.PermissionList[GetPlayerIdentifiers(source)[1]] = {
-			steam = GetPlayerIdentifiers(source)[1],
-			license = GetPlayerIdentifiers(source)[2],
-			permission = permission:lower(),
-		}
-		QBCore.Functions.ExecuteSql(true, "DELETE FROM `permissions` WHERE `steam` = '"..GetPlayerIdentifiers(source)[1].."'")
-		QBCore.Functions.ExecuteSql(true, "INSERT INTO `permissions` (`name`, `steam`, `license`, `permission`) VALUES ('"..GetPlayerName(source).."', '"..GetPlayerIdentifiers(source)[1].."', '"..GetPlayerIdentifiers(source)[2].."', '"..permission:lower().."')")
-		Player.Functions.UpdatePlayerData()
-		TriggerClientEvent('QBCore:Client:OnPermissionUpdate', source, permission)
-	end
-end
+QBCore.Functions.AddPermission(source, 'god')
 ```
 
 ## QBCore.Functions.RemovePermission
@@ -401,19 +410,11 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Removal of all permissions of specified source*
+**Returns -** *Nothing*
 
 ```lua
-QBCore.Functions.RemovePermission = function(source)
-	local Player = QBCore.Functions.GetPlayer(source)
-	if Player ~= nil then 
-		QBCore.Config.Server.PermissionList[GetPlayerIdentifiers(source)[1]] = nil	
-		QBCore.Functions.ExecuteSql(true, "DELETE FROM `permissions` WHERE `steam` = '"..GetPlayerIdentifiers(source)[1].."'")
-		Player.Functions.UpdatePlayerData()
-	end
-end
+QBCore.Functions.RemovePermission(source)
 ```
 
 ## QBCore.Functions.HasPermission
@@ -425,28 +426,13 @@ end
 |  source  || permission  |
 | :----: || :----: |
 | number   || string |
-| source   || permission name  |
 
-**Returns -**  *If player has specified permission*
+**Returns -**  *Boolean*
 
 ```lua
-QBCore.Functions.HasPermission = function(source, permission)
-	local retval = false
-	local steamid = GetPlayerIdentifiers(source)[1]
-	local licenseid = GetPlayerIdentifiers(source)[2]
-	local permission = tostring(permission:lower())
-	if permission == "user" then
-		retval = true
-	else
-		if QBCore.Config.Server.PermissionList[steamid] ~= nil then 
-			if QBCore.Config.Server.PermissionList[steamid].steam == steamid and QBCore.Config.Server.PermissionList[steamid].license == licenseid then
-				if QBCore.Config.Server.PermissionList[steamid].permission == permission or QBCore.Config.Server.PermissionList[steamid].permission == "god" then
-					retval = true
-				end
-			end
-		end
-	end
-	return retval
+local hasPerms = QBCore.Functions.HasPermission(source, 'god')
+if hasPerms then
+    -- Do something
 end
 ```
 
@@ -459,24 +445,13 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Permission name of specified source*
+**Returns -**  *String*
 
 ```lua
-QBCore.Functions.GetPermission = function(source)
-	local retval = "user"
-	Player = QBCore.Functions.GetPlayer(source)
-	local steamid = GetPlayerIdentifiers(source)[1]
-	local licenseid = GetPlayerIdentifiers(source)[2]
-	if Player ~= nil then
-		if QBCore.Config.Server.PermissionList[Player.PlayerData.steam] ~= nil then 
-			if QBCore.Config.Server.PermissionList[Player.PlayerData.steam].steam == steamid and QBCore.Config.Server.PermissionList[Player.PlayerData.steam].license == licenseid then
-				retval = QBCore.Config.Server.PermissionList[Player.PlayerData.steam].permission
-			end
-		end
-	end
-	return retval
+local perms = QBCore.Functions.GetPermission(source)
+if perms == 'god' then
+    -- Do something
 end
 ```
 
@@ -489,18 +464,13 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *If specified source with permission is opted in*
+**Returns -**  *Boolean*
 
 ```lua
-QBCore.Functions.IsOptin = function(source)
-	local retval = false
-	local steamid = GetPlayerIdentifiers(source)[1]
-	if QBCore.Functions.HasPermission(source, "admin") then
-		retval = QBCore.Config.Server.PermissionList[steamid].optin
-	end
-	return retval
+local isOptIn = QBCore.Functions.IsOptin(source)
+if isOptIn then
+    -- Do something
 end
 ```
 
@@ -513,17 +483,11 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Toggle of specified source to change optin state*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.ToggleOptin = function(source)
-	local steamid = GetPlayerIdentifiers(source)[1]
-	if QBCore.Functions.HasPermission(source, "admin") then
-		QBCore.Config.Server.PermissionList[steamid].optin = not QBCore.Config.Server.PermissionList[steamid].optin
-	end
-end
+QBCore.Functions.ToggleOptin(source)
 ```
 
 ## QBCore.Functions.IsPlayerBanned
@@ -535,25 +499,31 @@ end
 |  source  |
 | :----: |
 | number   |
-| source   |
 
-**Returns -**  *Check if source's identifier is banned*
+**Returns -**  *Boolean & String*
 
 ```lua
-QBCore.Functions.IsPlayerBanned = function (source)
-	local retval = false
-	local message = ""
-	QBCore.Functions.ExecuteSql(true, "SELECT * FROM `bans` WHERE `steam` = '"..GetPlayerIdentifiers(source)[1].."' OR `license` = '"..GetPlayerIdentifiers(source)[2].."' OR `ip` = '"..GetPlayerIdentifiers(source)[3].."'", function(result)
-		if result[1] ~= nil then 
-			if os.time() < result[1].expire then
-				retval = true
-				local timeTable = os.date("*t", tonumber(result[1].expire))
-				message = "You have been banned from the server:\n"..result[1].reason.."\nYour Ban Expires In: "..timeTable.day.. "/" .. timeTable.month .. "/" .. timeTable.year .. " " .. timeTable.hour.. ":" .. timeTable.min .. "\n"
-			else
-				QBCore.Functions.ExecuteSql(true, "DELETE FROM `bans` WHERE `id` = "..result[1].id)
-			end
-		end
-	end)
-	return retval, message
+local isBanned, banMessage = QBCore.Functions.IsPlayerBanned(source)
+if isBanned then
+    print(banMessage)
+end
+```
+
+## QBCore.Functions.IsLicenseInUse
+
+**Usage -** Checks the bans table in the database for a matching identifier.
+
+**Parameters -**
+
+|  source  |
+| :----: |
+| number   |
+
+**Returns -**  *Boolean*
+
+```lua
+local isLicenseUsed = QBCore.Functions.IsLicenseInUse('license:1234567890123')
+if isLicenseUsed then
+    -- Do something
 end
 ```

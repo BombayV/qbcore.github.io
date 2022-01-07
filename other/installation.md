@@ -6,13 +6,13 @@ Here you'll find all the ways to install QBCore into your server.
 ## Using txAdmin
 **NEW METHOD**
 1) We are now in popular templates. Click on Popular Templates and select the QBCore one.
-2) Follow the steps given by txAdmin. You will need a key from keymaster and XAMPP or MySql. We recommend adding your Steam API Key too.
+2) Follow the steps given by txAdmin. You will need a key from keymaster and have a database connection established. We recommend adding your Steam API Key too.
 3) Wait for everything to download and you'll have your new QBCore server ready to go!
 
 **OLD METHOD**
 1) Open the txAdmin interface. It will prompt you with a login and then it will proceed to make you pick to create a server. You will choose **Remote URL Template**.
 ![](https://c.file.glass/cecj6.png)
-2) It will prompt you with select template input. You will add the following 
+2) It will prompt you with select template input. You will add the following
 
 ```input
 https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yaml
@@ -25,23 +25,12 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 1) Go into your resources folder for your server.
 2) Download the dependecies, core resources which you can find in [here](./other/servercfg?id=qbcore-server-cfg), and other resources you plan to use.
 3) Add them in your resources folder.
-4) Ensure them in your server cfg by adding the following for every resource.
+4) Ensure them in your server cfg by adding the following for every resource or by adding with the folder structure.
 ```cfg
-ensure resourceName
+ensure [folderName] # Similar to globbing
+ensure resourceName # Singular resource
 ```
-5) Open ghmattimysql and go to the `config.json` file and configure it based on your database info.
-```json
-{
-    "user": "root",
-    "password": "password",
-    "host": "localhost",
-    "port": 3306,
-    "database": "ghmattimysql"
-}
-```
-Now go to your `server.cfg` file and delete the following if it exists.
+5) In your `server.cfg` add the following. Remember to replace it with your own data.
 ```cfg
-# Database Connection String
-set mysql_connection_string "mysql://user:password@host/database?debug=true&charset=utf8mb4"
+set mysql_connection_string "mysql://user:password@host/database?charset=utf8mb4&dateStrings=true"
 ```
-If you would **RATHER** use the method you just deleted, then just delete the `config.json` from ghmattimysql. 😊

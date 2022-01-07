@@ -14,7 +14,7 @@ Here you can find tutorials about everything related to QBCore + some extra ones
 
 - *https://youtu.be/dGXEj_06WEw*
 
-- **Remote URL:** 
+- **Remote URL:**
 
 ```input
 https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yaml
@@ -23,33 +23,42 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 ## Text
 
 ### Script Optimization
-- Always replace GetPlayerPed(-1) with PlayerPedId()
+1) Always replace `GetPlayerPed(1)1)` with `PlayerPedId()`.
 
-- Always replace GetDistanceBetweenCoords with lua math aka #(vector3 - vector3)
+1) Always replace `GetDistanceBetweenCoords` with lua math aka #`(vector3 1) vector3)`
 
-- Don't create unnecessary threads. If you can take a thread and turn it into a function and call that somewhere else to trigger it, do it.
+1) Don't create unnecessary threads. If you can take a thread and turn it into a function and call that somewhere else to trigger it, do it.
 
-- As kody said, if you are creating a function or an event, make it so that it can be used in many different formats with different variables. Keep it universal basically.
+1) If you are creating a function or an event, make it so that it can be used in many different formats with different variables. Keep it universal basically.
 
-- If you do have to create a thread that includes a `while` loop, always avoid using `while true do` if able.
+1) If you do have to create a thread that includes a `while` loop, always avoid using `while true do` if possible. If you have to use this then just follow #6 and it won’t impact performance much.
 
-- For markers, use a variable like `inRange` that you can set to true or false so that you can control the loop for checking distance. You can set a massive wait if not inRange of the marker which creates less overhead when not in use.
+1) Control your thread times by using a variable that changes the wait time retroactively. So you can set the thread wait time to say `1000ms` which check for your if statement every second and if it makes it into the statement you can lower the wait time by just changing the variable value, `Wait(sleep)`.
 
-- If you have job specific loops, make sure they only apply to players with that job. There's no reason for someone who is not a cop to be running a loop on their machine that does not apply to them.
+1) If you have job specific loops, make sure they only apply to players with that job. There's no reason for someone who is not a cop to be running a loop on their machine that does not apply to them
 
-- Not really optimization related but a surplus amount of security in a code is not a bad thing. Don't be afraid to add in multiple if checks or create random variables to pass through your events.
+1) Not really optimization related but a surplus amount of security in a code is not a bad thing. Don't be afraid to add in multiple if checks or create random variables to pass through your events
 
-- Ties into security as well, never do any type of transaction with the player regarding money or items on the client side of a resource.
+1) Ties into security as well, never do any type of transaction with the player regarding money or items on the client side of a resource
+
+1) Instead of using `table.insert`, use `tableName[#tableName+1] = data`. You can read more about this [here](https://springrts.com/wiki/Lua_Performance).
+
+1) Instead of using `if something ~= nil` use `if something then`. This method checks for nil and/or false at the same time. You can also do `if not something then`.
+
+1) Localize as many functions and variables as possible. Lua can read them faster.
+
+1) Utilize the `onPlayerLoaded`, `onJobUpdate`, `onGangUpdate`, `onPlayerUnloaded` event handlers to set variables in your script like `local PlayerJob = {}` and then in your script you can do `if PlayerJob.name == 'job' then`. This allows you to not have to get the player object all the time.
+
 
 ### Enable Onesync Infinity
 
-- Startup Args: 
+- Startup Args:
 
 ```cmd
 +set onesync on
 ```
 
-- `server.cfg` file: 
+- `server.cfg` file:
 
 ```cfg
 set onesync on
