@@ -1,7 +1,6 @@
 <!-- docs/_sidebar.md -->
 [**Go Back**](./about.md)
 - [Server Functions](/./server/functions/functions?id=server-sided-functions-and-usage)
-    - [ExecuteSql](/./server/functions/functions?id=qbcorefunctionsexecutesql)
     - [GetIdentifier](/./server/functions/functions?id=qbcorefunctionsgetidentifier)
     - [GetSource](/./server/functions/functions?id=qbcorefunctionsgetsource)
     - [GetPlayer](/./server/functions/functions?id=qbcorefunctionsgetplayer)
