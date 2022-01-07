@@ -14,13 +14,14 @@
 
 **Client**
 
-- [Player Data](./client/playerdata/playerdata?id=playerdata-client)
 - [Functions](./client/functions/functions?id=client-sided-functions-and-usage)
+- [Player Data](./client/playerdata/playerdata?id=playerdata-client)
 
 **Server**
 
-- [Player Data](./server/playerdata/playerdata?id=playerdata-server)
 - [Functions](./server/functions/functions?id=server-sided-functions-and-usage)
+- [Player Functions](./server/player/functions?id=player-functions-server)
+- [Player Data](./server/playerdata/playerdata?id=playerdata-server)
 
 **Other**
 

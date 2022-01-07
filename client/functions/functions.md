@@ -2,7 +2,7 @@
 
 The following info contains every client sided function in QBCore framework and how to use it. It also contains some basic info on what it does.
 
-?> **Important information** - All the following functions required QBCore object which is called through the import in the fxmanifest. If you don't know yet about importing the QBCore object, we recommend reading the [fxmanifest documentation](./other/fxmanifest?id=qbcore-fxmanifest-introduction)
+?> **Important information** - All the following functions required QBCore object which is called through the import in the fxmanifest or the export. If you don't know yet about importing the QBCore object, we recommend reading the [fxmanifest documentation](../other/fxmanifest/fxmanifest?id=qbcore-fxmanifest-introduction).
 
 ## QBCore.Functions.GetPlayerData
 
@@ -12,908 +12,664 @@ The following info contains every client sided function in QBCore framework and 
 
 |    cb   |
 | :----: |
-| bool  |
-| cb    |
+| function  |
 
-**Returns -**  *QBCore.PlayerData*
-
-```lua
-QBCore.Functions.GetPlayerData = function(cb)
-    if cb ~= nil then
-        cb(QBCore.PlayerData)
-    else
-        return QBCore.PlayerData
-    end
-end
-```
-
-## QBCore.Functions.GetPlayers
-
-**Usage -** This function returns a table of all the players currently in the server but is not onesync-infinity compatible when used on the client side. You can use `#` to return the number or `json.encode(table)` to return the JSON.
-
-**Parameters -** None
-
-**Returns -**  *players*
+**Returns -**  *Table*
 
 ```lua
-QBCore.Functions.GetPlayers = function()
-    local players = {}
-    for _, player in ipairs(GetActivePlayers()) do
-        local ped = GetPlayerPed(player)
-        if DoesEntityExist(ped) then
-            table.insert(players, player)
-        end
-    end
-    return players
-end
+-- Example 1
+local Player = QBCore.Functions.GetPlayerData()
+
+-- Example 2
+QBCore.Functions.GetPlayerData(function(Player)
+    print(Player.citizenid)
+end)
 ```
 
-## QBCore.Functions.DrawText
+## QBCore.Functions.XXXXXXX
 
-**Usage -** Not used as commonly as 3D text, you can draw text on the screen with this function which makes it more convenient than having to make a new function locally.
-
-**Parameters -** 
-
-|    x   ||    y   || width  || height || scale  ||    r   ||    g   ||    b   ||    a   ||  text  |
-| :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: |
-| number || number || number || number || float  || number || number || number || number || string |
-|position||position|| size   || size   || size   || color  || color  || color  || color  || text   |
-
-**Returns -**  *DrawText on screen*
-
-```lua
-QBCore.Functions.DrawText = function(x, y, width, height, scale, r, g, b, a, text)
-    SetTextFont(4)
-    SetTextProportional(0)
-    SetTextScale(scale, scale)
-    SetTextColour(r, g, b, a)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextEdge(2, 0, 0, 0, 255)
-    SetTextDropShadow()
-    SetTextOutline()
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(x - width/2, y - height/2 + 0.005)
-end
-```
-
-## QBCore.Functions.DrawText3D
-
-**Usage -** Another very common function you will see throughout the framework. This allows you to draw floating 3D text on the screen.
-
-**Parameters -** 
-
-|    x   ||    y   ||    z   ||  text  |
-| :----: || :----: || :----: || :----: |
-| float  || float  || float  || string |
-| coords || coords || coords ||  text  |
-
-**Returns -**  *Floating 3D text in-game*
-
-```lua
-QBCore.Functions.DrawText3D = function(x, y, z, text)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
-end
-```
-
-## QBCore.Functions.GetCoords
-
-**Usage -** This function operates very similarly to how the native GetEntityCoords does but it returns the heading as well.
+**Usage -** Usage.
 
 **Parameters -**
 
-|    entity   |
-| :----: |
-| Ex: PlayerPedId() |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *table with coords + heading*
-
-```lua
-QBCore.Functions.GetCoords = function(entity)
-    local coords = GetEntityCoords(entity, false)
-    local heading = GetEntityHeading(entity)
-    return {
-        x = coords.x,
-        y = coords.y,
-        z = coords.z,
-        a = heading
-    }
-end
-
-print(json.encode(QBCore.Functions.GetCoords(PlayerPedId())))
-```
-
-## QBCore.Functions.SpawnVehicle
-
-**Usage -** Spawns a specific vehicle model.
-
-**Parameters -** 
-
-|  model ||   cb   ||    coords   ||  isnetworked  |
-| :----: || :----: || :----: || :----: |
-| string ||  bool  || vector  || bool |
-|  veh   ||   cb   ||  position ||  isnetworked  |
-
-**Returns -**  *Spawns vehicle*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.SpawnVehicle = function(model, cb, coords, isnetworked)
-    local model = (type(model)=="number" and model or GetHashKey(model))
-    local coords = coords ~= nil and coords or QBCore.Functions.GetCoords(PlayerPedId())
-    local isnetworked = isnetworked ~= nil and isnetworked or true
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-    RequestModel(model)
-    while not HasModelLoaded(model) do
-        Citizen.Wait(10)
-    end
-
-    local veh = CreateVehicle(model, coords.x, coords.y, coords.z, coords.a, isnetworked, false) -- SetEntityAsMissionEntity boolean
-    local netid = NetworkGetNetworkIdFromEntity(veh)
-
-	SetVehicleHasBeenOwnedByPlayer(vehicle,  true)
-	SetNetworkIdCanMigrate(netid, true)
-    SetVehicleNeedsToBeHotwired(veh, false)
-    SetVehRadioStation(veh, "OFF")
-
-    SetModelAsNoLongerNeeded(model)
-
-    if cb ~= nil then
-        cb(veh)
-    end
-end
 ```
 
-## QBCore.Functions.DeleteVehicle
+## QBCore.Functions.XXXXXXX
 
-**Usage -** Pretty straightforward, deletes a vehicle.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  vehicle |
-| :----: |
-| entity |
-| Ex: GetVehiclePedIsIn() |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Deletes vehicle entity*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.DeleteVehicle = function(vehicle)
-    SetEntityAsMissionEntity(vehicle, true, true)
-    DeleteVehicle(vehicle)
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.Notify
-
-**Usage -** Allows you to use the built in notification system which means no dependency on another.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  text ||   textype   ||    length  |
-| :----: || :----: || :----: |
-| string ||  string  || number  |
-|  text   ||   type   ||  duration |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Player notification*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.Notify = function(text, textype, length)
-    local ttype = textype ~= nil and textype or "primary"
-    local length = length ~= nil and length or 5000
-    SendNUIMessage({
-        action = "show",
-        type = ttype,
-        length = length,
-        text = text,
-    })
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.TriggerCallback
-
-**Usage -** Allows you to retrieve information by calling to the server and getting something in return.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  name ||   cb   || ... |
-| :----: || :----: || :----: |
-| string ||  bool  || arguments  |
-|  cbname   ||   cb   ||  varargs |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Data from server*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.TriggerCallback = function(name, cb, ...)
-	QBCore.ServerCallbacks[name] = cb
-    TriggerServerEvent("QBCore:Server:TriggerCallback", name, ...)
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.EnumerateEntities
-
-**Usage -** This function returns a list of designated objects in order of first to last.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  initFunc ||   moveFunc   || disposeFunc |
-| :----: || :----: || :----: |
-| function ||  function  || function  |
-|  start   ||   next   ||  end |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Returns list of enumerated object from first to last*
-
-```lua
-QBCore.Functions.EnumerateEntities = function(initFunc, moveFunc, disposeFunc)
-	return coroutine.wrap(function()
-		local iter, id = initFunc()
-		if not id or id == 0 then
-			disposeFunc(iter)
-			return
-		end
-
-		local enum = {handle = iter, destructor = disposeFunc}
-		setmetatable(enum, entityEnumerator)
-
-		local next = true
-		repeat
-		coroutine.yield(id)
-		next, id = moveFunc(iter)
-		until not next
-
-		enum.destructor, enum.handle = nil, nil
-		disposeFunc(iter)
-    end)
-end
-```
-
-## QBCore.Functions.GetVehicles
-
-**Usage -** Returns an enumerated table of vehicles.
-
-**Parameters -** None
-
-**Returns -**  *Enumerated table of vehicles*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetVehicles = function()
-    local vehicles = {}
-	for vehicle in QBCore.Functions.EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle) do
-		table.insert(vehicles, vehicle)
-	end
-	return vehicles
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetPeds
-
-**Usage -** Returns an enumerated table of peds.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  ignoreList |
-| :----: |
-| table |
-|  Ex: Player |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Enumerated table of peds*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetPeds = function(ignoreList)
-    local ignoreList = ignoreList or {}
-	local peds       = {}
-	for ped in QBCore.Functions.EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed) do
-		local found = false
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-        for j=1, #ignoreList, 1 do
-			if ignoreList[j] == ped then
-				found = true
-			end
-		end
-
-		if not found then
-			table.insert(peds, ped)
-		end
-	end
-
-	return peds
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetClosestVehicle
-
-**Usage -** Returns the closest vehicle to the player at the time.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  coords |
-| :----: |
-| vector |
-|  position |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Closest vehicle to player at moment of execution*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetClosestVehicle = function(coords)
-	local vehicles        = QBCore.Functions.GetVehicles()
-	local closestDistance = -1
-	local closestVehicle  = -1
-	local coords          = coords
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if coords == nil then
-		local playerPed = PlayerPedId()
-		coords = GetEntityCoords(playerPed)
-	end
-	for i=1, #vehicles, 1 do
-		local vehicleCoords = GetEntityCoords(vehicles[i])
-		local distance = #(vehicleCoords - coords)
-
-		if closestDistance == -1 or closestDistance > distance then
-			closestVehicle  = vehicles[i]
-			closestDistance = distance
-		end
-	end
-	return closestVehicle
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetClosestPed
-
-**Usage -** Returns the closest ped to the player at the time.
+**Usage -** Usage.
 
 **Parameters -**
 
-| coords || ignoreList |
-| :----: || :----: |
-| vector  || table  |
-| position || Ex: Player |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Closest ped to player at moment of execution*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetClosestPed = function(coords, ignoreList)
-	local ignoreList      = ignoreList or {}
-	local peds            = QBCore.Functions.GetPeds(ignoreList)
-	local closestDistance = -1
-    local closestPed      = -1
-    
-    if coords == nil then
-        coords = GetEntityCoords(PlayerPedId())
-    end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	for i=1, #peds, 1 do
-		local pedCoords = GetEntityCoords(peds[i])
-		local distance = #(pedCoords - coords)
-
-		if closestDistance == -1 or closestDistance > distance then
-			closestPed      = peds[i]
-			closestDistance = distance
-		end
-	end
-
-	return closestPed, closestDistance
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetClosestPlayer
-
-**Usage -** Returns the closest player to the another player at the time.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  coords |
-| :----: |
-| vector |
-|  position   |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Closest player to player at moment of execution*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetClosestPlayer = function(coords)
-	if coords == nil then
-        coords = GetEntityCoords(PlayerPedId())
-	end
-	
-	local closestPlayers = QBCore.Functions.GetPlayersFromCoords(coords)
-    local closestDistance = -1
-    local closestPlayer = -1
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-    for i=1, #closestPlayers, 1 do
-        if closestPlayers[i] ~= PlayerId() and closestPlayers[i] ~= -1 then
-            local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
-			local distance = #(pos - coords)
-
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = closestPlayers[i]
-                closestDistance = distance
-            end
-        end
-	end
-
-	return closestPlayer, closestDistance
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetPlayersFromCoords
-
-**Usage -** Returns a table of the players that are within 5 GTA units away from specific coordinates).
+**Usage -** Usage.
 
 **Parameters -**
 
-| coords || distance |
-| :----: || :----: |
-| vector  || float  |
-| position || distance |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *A table of the players that are within the specified distance*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetPlayersFromCoords = function(coords, distance)
-    local players = QBCore.Functions.GetPlayers()
-    local closePlayers = {}
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-    if coords == nil then
-		coords = GetEntityCoords(PlayerPedId())
-    end
-    if distance == nil then
-        distance = 5.0
-    end
-    for _, player in pairs(players) do
-		local target = GetPlayerPed(player)
-		local targetCoords = GetEntityCoords(target)
-		local targetdistance = #(targetCoords - coords)
-		if targetdistance <= distance then
-			table.insert(closePlayers, player)
-		end
-    end
-    
-    return closePlayers
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.HasItem
-
-**Usage -** Returns whether or not a player has a certain item.
+**Usage -** Usage.
 
 **Parameters -**
 
-|  source  ||   cb   ||   item   |
-| :----: || :----: || :----: |
-| number  || bool  || string  |
-| source || cb || itemName |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *QBCore.PlayerData*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.HasItem = function(source, cb, item)
-	local retval = false
-	QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
-		if result then
-			retval = true
-		end
-		return retval
-	end, item)
-	return retval
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.Progressbar
-
-**Usage -** Allows you to call this function instead of using an export for the progress bar.
+**Usage -** Usage.
 
 **Parameters -**
 
-| name || label || duration || useWhileDead || canCancel || disableControls || animation ||  prop  || propTwo || onFinish || onCancel |
-| :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: || :----: |
-| string  || string  || number  || bool || bool  || bool  || string  || entity || entity  || bool  || bool  |
-| name || text || duration || allow while dead || can cancel progress || disable actions || ped animation ||  object/entity  || object/entity  || final action || cancel action |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Creates a progressbar*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.Progressbar = function(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
-    exports['progressbar']:Progress({
-        name = name:lower(),
-        duration = duration,
-        label = label,
-        useWhileDead = useWhileDead,
-        canCancel = canCancel,
-        controlDisables = disableControls,
-        animation = animation,
-        prop = prop,
-        propTwo = propTwo,
-    }, function(cancelled)
-        if not cancelled then
-            if onFinish ~= nil then
-                onFinish()
-            end
-        else
-            if onCancel ~= nil then
-                onCancel()
-            end
-        end
-    end)
-end
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.GetVehicleProperties
-
-**Usage -** Returns a table of the properties (mods, colors, wheels, etc.) of a vehicle.
+**Usage -** Usage.
 
 **Parameters -**
 
-| vehicle |
-| :----: |
-| entity |
-| Ex: GetVehiclePedIsIn() |
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Table of vehicle properties*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.GetVehicleProperties = function(vehicle)
-	local color1, color2               = GetVehicleColours(vehicle)
-	local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
-	local livery = GetVehicleLivery(vehicle)
-	if livery == 0 then
-		livery = GetVehicleMod(vehicle, 48)
-	end
-	
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	return {
-
-		model             = GetEntityModel(vehicle),
-
-		plate             = GetVehicleNumberPlateText(vehicle),
-		plateIndex        = GetVehicleNumberPlateTextIndex(vehicle),
-
-		health            = GetEntityHealth(vehicle),
-		dirtLevel         = GetVehicleDirtLevel(vehicle),
-
-		color1            = color1,
-		color2            = color2,
-
-		pearlescentColor  = pearlescentColor,
-		wheelColor        = wheelColor,
-
-		wheels            = GetVehicleWheelType(vehicle),
-		windowTint        = GetVehicleWindowTint(vehicle),
-
-		neonEnabled       = {
-			IsVehicleNeonLightEnabled(vehicle, 0),
-			IsVehicleNeonLightEnabled(vehicle, 1),
-			IsVehicleNeonLightEnabled(vehicle, 2),
-			IsVehicleNeonLightEnabled(vehicle, 3)
-		},
-
-		extras            = {
-			
-		},
-
-		neonColor         = table.pack(GetVehicleNeonLightsColour(vehicle)),
-		tyreSmokeColor    = table.pack(GetVehicleTyreSmokeColor(vehicle)),
-
-		modSpoilers       = GetVehicleMod(vehicle, 0),
-		modFrontBumper    = GetVehicleMod(vehicle, 1),
-		modRearBumper     = GetVehicleMod(vehicle, 2),
-		modSideSkirt      = GetVehicleMod(vehicle, 3),
-		modExhaust        = GetVehicleMod(vehicle, 4),
-		modFrame          = GetVehicleMod(vehicle, 5),
-		modGrille         = GetVehicleMod(vehicle, 6),
-		modHood           = GetVehicleMod(vehicle, 7),
-		modFender         = GetVehicleMod(vehicle, 8),
-		modRightFender    = GetVehicleMod(vehicle, 9),
-		modRoof           = GetVehicleMod(vehicle, 10),
-
-		modEngine         = GetVehicleMod(vehicle, 11),
-		modBrakes         = GetVehicleMod(vehicle, 12),
-		modTransmission   = GetVehicleMod(vehicle, 13),
-		modHorns          = GetVehicleMod(vehicle, 14),
-		modSuspension     = GetVehicleMod(vehicle, 15),
-		modArmor          = GetVehicleMod(vehicle, 16),
-
-		modTurbo          = IsToggleModOn(vehicle, 18),
-		modSmokeEnabled   = IsToggleModOn(vehicle, 20),
-		modXenon          = IsToggleModOn(vehicle, 22),
-
-		modFrontWheels    = GetVehicleMod(vehicle, 23),
-		modBackWheels     = GetVehicleMod(vehicle, 24),
-
-		modPlateHolder    = GetVehicleMod(vehicle, 25),
-		modVanityPlate    = GetVehicleMod(vehicle, 26),
-		modTrimA          = GetVehicleMod(vehicle, 27),
-		modOrnaments      = GetVehicleMod(vehicle, 28),
-		modDashboard      = GetVehicleMod(vehicle, 29),
-		modDial           = GetVehicleMod(vehicle, 30),
-		modDoorSpeaker    = GetVehicleMod(vehicle, 31),
-		modSeats          = GetVehicleMod(vehicle, 32),
-		modSteeringWheel  = GetVehicleMod(vehicle, 33),
-		modShifterLeavers = GetVehicleMod(vehicle, 34),
-		modAPlate         = GetVehicleMod(vehicle, 35),
-		modSpeakers       = GetVehicleMod(vehicle, 36),
-		modTrunk          = GetVehicleMod(vehicle, 37),
-		modHydrolic       = GetVehicleMod(vehicle, 38),
-		modEngineBlock    = GetVehicleMod(vehicle, 39),
-		modAirFilter      = GetVehicleMod(vehicle, 40),
-		modStruts         = GetVehicleMod(vehicle, 41),
-		modArchCover      = GetVehicleMod(vehicle, 42),
-		modAerials        = GetVehicleMod(vehicle, 43),
-		modTrimB          = GetVehicleMod(vehicle, 44),
-		modTank           = GetVehicleMod(vehicle, 45),
-		modWindows        = GetVehicleMod(vehicle, 46),
-		modLivery         = livery,
-		modCustomTyres	  = GetVehicleModVariation(vehicle, 23)
-	}
-end
 ```
+## QBCore.Functions.XXXXXXX
 
-## QBCore.Functions.SetVehicleProperties
-
-**Usage -** Applies properties to a specific vehicle.
+**Usage -** Usage.
 
 **Parameters -**
 
-|    vehicle   ||    props   |
-| :----: || :----: |
-| entity || table |
-|Ex: GetVehiclePedIsIn()|| {props.plate = string, props.health = float}|
+|    cb     |
+| :----:    |
+| function  |
 
-**Returns -**  *Set vehicle properties to a vehicle*
+**Returns -**  *Nothing*
 
 ```lua
-QBCore.Functions.SetVehicleProperties = function(vehicle, props)
-	SetVehicleModKit(vehicle, 0)
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.plate ~= nil then
-		SetVehicleNumberPlateText(vehicle, props.plate)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.plateIndex ~= nil then
-		SetVehicleNumberPlateTextIndex(vehicle, props.plateIndex)
-	end
+**Usage -** Usage.
 
-	if props.health ~= nil then
-		SetEntityHealth(vehicle, props.health)
-	end
+**Parameters -**
 
-	if props.dirtLevel ~= nil then
-		SetVehicleDirtLevel(vehicle, props.dirtLevel)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.color1 ~= nil then
-		local color1, color2 = GetVehicleColours(vehicle)
-		SetVehicleColours(vehicle, props.color1, color2)
-	end
+**Returns -**  *Nothing*
 
-	if props.color2 ~= nil then
-		local color1, color2 = GetVehicleColours(vehicle)
-		SetVehicleColours(vehicle, color1, props.color2)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.pearlescentColor ~= nil then
-		local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
-		SetVehicleExtraColours(vehicle, props.pearlescentColor, wheelColor)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.wheelColor ~= nil then
-		local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
-		SetVehicleExtraColours(vehicle, pearlescentColor, props.wheelColor)
-	end
+**Usage -** Usage.
 
-	if props.wheels ~= nil then
-		SetVehicleWheelType(vehicle, props.wheels)
-	end
+**Parameters -**
 
-	if props.windowTint ~= nil then
-		SetVehicleWindowTint(vehicle, props.windowTint)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.neonEnabled ~= nil then
-		SetVehicleNeonLightEnabled(vehicle, 0, props.neonEnabled[1])
-		SetVehicleNeonLightEnabled(vehicle, 1, props.neonEnabled[2])
-		SetVehicleNeonLightEnabled(vehicle, 2, props.neonEnabled[3])
-		SetVehicleNeonLightEnabled(vehicle, 3, props.neonEnabled[4])
-	end
+**Returns -**  *Nothing*
 
-	if props.neonColor ~= nil then
-		SetVehicleNeonLightsColour(vehicle, props.neonColor[1], props.neonColor[2], props.neonColor[3])
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modSmokeEnabled ~= nil then
-		ToggleVehicleMod(vehicle, 20, true)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.tyreSmokeColor ~= nil then
-		SetVehicleTyreSmokeColor(vehicle, props.tyreSmokeColor[1], props.tyreSmokeColor[2], props.tyreSmokeColor[3])
-	end
+**Usage -** Usage.
 
-	if props.modSpoilers ~= nil then
-		SetVehicleMod(vehicle, 0, props.modSpoilers, false)
-	end
+**Parameters -**
 
-	if props.modFrontBumper ~= nil then
-		SetVehicleMod(vehicle, 1, props.modFrontBumper, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modRearBumper ~= nil then
-		SetVehicleMod(vehicle, 2, props.modRearBumper, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modSideSkirt ~= nil then
-		SetVehicleMod(vehicle, 3, props.modSideSkirt, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modExhaust ~= nil then
-		SetVehicleMod(vehicle, 4, props.modExhaust, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modFrame ~= nil then
-		SetVehicleMod(vehicle, 5, props.modFrame, false)
-	end
+**Usage -** Usage.
 
-	if props.modGrille ~= nil then
-		SetVehicleMod(vehicle, 6, props.modGrille, false)
-	end
+**Parameters -**
 
-	if props.modHood ~= nil then
-		SetVehicleMod(vehicle, 7, props.modHood, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modFender ~= nil then
-		SetVehicleMod(vehicle, 8, props.modFender, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modRightFender ~= nil then
-		SetVehicleMod(vehicle, 9, props.modRightFender, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modRoof ~= nil then
-		SetVehicleMod(vehicle, 10, props.modRoof, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modEngine ~= nil then
-		SetVehicleMod(vehicle, 11, props.modEngine, false)
-	end
+**Usage -** Usage.
 
-	if props.modBrakes ~= nil then
-		SetVehicleMod(vehicle, 12, props.modBrakes, false)
-	end
+**Parameters -**
 
-	if props.modTransmission ~= nil then
-		SetVehicleMod(vehicle, 13, props.modTransmission, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modHorns ~= nil then
-		SetVehicleMod(vehicle, 14, props.modHorns, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modSuspension ~= nil then
-		SetVehicleMod(vehicle, 15, props.modSuspension, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modArmor ~= nil then
-		SetVehicleMod(vehicle, 16, props.modArmor, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modTurbo ~= nil then
-		ToggleVehicleMod(vehicle,  18, props.modTurbo)
-	end
+**Usage -** Usage.
 
-	if props.modXenon ~= nil then
-		ToggleVehicleMod(vehicle,  22, props.modXenon)
-	end
+**Parameters -**
 
-	if props.modFrontWheels ~= nil then
-		SetVehicleMod(vehicle, 23, props.modFrontWheels, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modBackWheels ~= nil then
-		SetVehicleMod(vehicle, 24, props.modBackWheels, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modPlateHolder ~= nil then
-		SetVehicleMod(vehicle, 25, props.modPlateHolder, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modVanityPlate ~= nil then
-		SetVehicleMod(vehicle, 26, props.modVanityPlate, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modTrimA ~= nil then
-		SetVehicleMod(vehicle, 27, props.modTrimA, false)
-	end
+**Usage -** Usage.
 
-	if props.modOrnaments ~= nil then
-		SetVehicleMod(vehicle, 28, props.modOrnaments, false)
-	end
+**Parameters -**
 
-	if props.modDashboard ~= nil then
-		SetVehicleMod(vehicle, 29, props.modDashboard, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modDial ~= nil then
-		SetVehicleMod(vehicle, 30, props.modDial, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modDoorSpeaker ~= nil then
-		SetVehicleMod(vehicle, 31, props.modDoorSpeaker, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modSeats ~= nil then
-		SetVehicleMod(vehicle, 32, props.modSeats, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modSteeringWheel ~= nil then
-		SetVehicleMod(vehicle, 33, props.modSteeringWheel, false)
-	end
+**Usage -** Usage.
 
-	if props.modShifterLeavers ~= nil then
-		SetVehicleMod(vehicle, 34, props.modShifterLeavers, false)
-	end
+**Parameters -**
 
-	if props.modAPlate ~= nil then
-		SetVehicleMod(vehicle, 35, props.modAPlate, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modSpeakers ~= nil then
-		SetVehicleMod(vehicle, 36, props.modSpeakers, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modTrunk ~= nil then
-		SetVehicleMod(vehicle, 37, props.modTrunk, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modHydrolic ~= nil then
-		SetVehicleMod(vehicle, 38, props.modHydrolic, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modEngineBlock ~= nil then
-		SetVehicleMod(vehicle, 39, props.modEngineBlock, false)
-	end
+**Usage -** Usage.
 
-	if props.modAirFilter ~= nil then
-		SetVehicleMod(vehicle, 40, props.modAirFilter, false)
-	end
+**Parameters -**
 
-	if props.modStruts ~= nil then
-		SetVehicleMod(vehicle, 41, props.modStruts, false)
-	end
+|    cb     |
+| :----:    |
+| function  |
 
-	if props.modArchCover ~= nil then
-		SetVehicleMod(vehicle, 42, props.modArchCover, false)
-	end
+**Returns -**  *Nothing*
 
-	if props.modAerials ~= nil then
-		SetVehicleMod(vehicle, 43, props.modAerials, false)
-	end
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
 
-	if props.modTrimB ~= nil then
-		SetVehicleMod(vehicle, 44, props.modTrimB, false)
-	end
+```
+## QBCore.Functions.XXXXXXX
 
-	if props.modTank ~= nil then
-		SetVehicleMod(vehicle, 45, props.modTank, false)
-	end
+**Usage -** Usage.
 
-	if props.modWindows ~= nil then
-		SetVehicleMod(vehicle, 46, props.modWindows, false)
-	end
+**Parameters -**
 
-	if props.modLivery ~= nil then
-		SetVehicleMod(vehicle, 48, props.modLivery, false)
-		SetVehicleLivery(vehicle, props.modLivery)
-	end
-	if props.modCustomTyres ~= nil and props.modCustomTyres then 
-		SetVehicleMod(vehicle, 23, props.modCustomTyres, true)
-	end
-end
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
+```
+## QBCore.Functions.XXXXXXX
+
+**Usage -** Usage.
+
+**Parameters -**
+
+|    cb     |
+| :----:    |
+| function  |
+
+**Returns -**  *Nothing*
+
+```lua
+-- Example 1
+local Something = QBCore.Functions.XXXXXX()
+
 ```
