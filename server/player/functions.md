@@ -23,7 +23,7 @@ local Player = QBCore.Functions.GetPlayer(_src)
 **Returns -**  *Boolean*
 
 ```lua
-local newJob = QBCore.Functions.SetJob('police', '0')
+local newJob = Player.Functions.SetJob('police', '0')
 if newJob then
     -- Do something
 end
