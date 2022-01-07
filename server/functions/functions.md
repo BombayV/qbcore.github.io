@@ -127,7 +127,7 @@ end
 
 **Parameters -** None
 
-**Returns -**  *Array*
+**Returns -**  *Table*
 
 ```lua
 local players = QBCore.Functions.GetQBPlayers()
