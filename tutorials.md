@@ -25,7 +25,7 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 ### Script Optimization
 1) Always replace `GetPlayerPed(-1)` with `PlayerPedId()`.
 
-1) Always replace `GetDistanceBetweenCoords` with lua math aka #`(vector3 - vector3)`
+1) Always replace `GetDistanceBetweenCoords` with lua math aka `#(vector3 - vector3)`.
 
 1) Don't create unnecessary threads. If you can take a thread and turn it into a function and call that somewhere else to trigger it, do it.
 
