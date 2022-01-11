@@ -23,9 +23,9 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 ## Text
 
 ### Script Optimization
-1) Always replace `GetPlayerPed(1)1)` with `PlayerPedId()`.
+1) Always replace `GetPlayerPed(-1)` with `PlayerPedId()`.
 
-1) Always replace `GetDistanceBetweenCoords` with lua math aka #`(vector3 1) vector3)`
+1) Always replace `GetDistanceBetweenCoords` with lua math aka `#(vector3 - vector3)`
 
 1) Don't create unnecessary threads. If you can take a thread and turn it into a function and call that somewhere else to trigger it, do it.
 
@@ -42,6 +42,8 @@ https://raw.githubusercontent.com/qbcore-framework/txAdminRecipe/main/qbcore.yam
 1) Ties into security as well, never do any type of transaction with the player regarding money or items on the client side of a resource
 
 1) Instead of using `table.insert`, use `tableName[#tableName+1] = data`. You can read more about this [here](https://springrts.com/wiki/Lua_Performance).
+
+1) Instead of `table.insert(tableName, "tableName", data)` use `tableName["tableName"] = data`
 
 1) Instead of using `if something ~= nil` use `if something then`. This method checks for nil and/or false at the same time. You can also do `if not something then`.
 
