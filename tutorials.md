@@ -1,5 +1,5 @@
 # QBCore Tutorials
-Here you can find tutorials about everything related to QBCore + some extra ones about FiveM. We will add the most updated ones or the ones with the most useful information
+Here you can find tutorials about everything related to QBCore + some extra ones about FiveM. We will add the most updated ones or the ones with the most useful information.
 
 ## Videos
 
@@ -67,8 +67,8 @@ set onesync on
 - txAdmin: Go to settings, then onesync, and choose infinity.
 
 ### Voice System
-1) Set onesync infinity on
-2) Download [**pma-voice**](https://github.com/AvarianKnight/pma-voice/releases/tag/v4.0.0)
+1) Set onesync infinity on.
+2) Download [**pma-voice**](https://github.com/AvarianKnight/pma-voice/releases/tag/v4.0.0).
 3) Add the following code in your `server.cfg` file.
 ```cfg
 # PMA Voice Convars (Onesync Infinity Only) -- https://github.com/AvarianKnight/pma-voice

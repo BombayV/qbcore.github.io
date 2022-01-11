@@ -62,7 +62,9 @@ server_scripts {
 Loads a script/s on both the client and server.
 
 ```lua
-shared_script '@qb-core/import.lua'
+shared_scripts {
+    '@qb-core/import.lua'
+}
 ```
 
 ## dependency
@@ -103,10 +105,10 @@ description 'QBCore Example Manifest'
 version '1.0.0'
 
 lua54 'yes' -- Add in case you want to use lua 5.4 (https://www.lua.org/manual/5.4/manual.html)
-use_fxv2_oal 'yes' -- Requires lua 5.4
+--use_fxv2_oal 'yes' -- Use if you want to experiment with a lower overhead
 
-shared_script {
-    '@qb-core/import.lua'
+shared_scripts {
+    '@qb-core/import.lua' -- Import the QBCore object
 }
 
 client_scripts {
